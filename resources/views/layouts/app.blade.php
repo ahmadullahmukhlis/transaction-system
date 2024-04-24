@@ -218,10 +218,12 @@
         <div class="content-wrapper">
 
             <!-- /.content-header -->
-
+            <div class="container">
+                {{ $header ?? '' }}
+            </div>
             <!-- Main content -->
             <section class="content" id="content">
-                @yield('content')
+                {{ $slot }}
             </section>
             <!-- /.content -->
         </div>
