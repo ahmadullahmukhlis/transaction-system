@@ -71,7 +71,7 @@ final class UserTable extends PowerGridComponent
 
             Column::make('Created at', 'created_at')
                 ->sortable()
-                ->searchable()->editOnClick(true),
+                ->searchable(),
 
             Column::action('Action')
         ];
