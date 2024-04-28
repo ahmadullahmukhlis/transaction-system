@@ -71,7 +71,7 @@ final class UserTable extends PowerGridComponent
 
             Column::make('Created at', 'created_at')
                 ->sortable()
-                ->searchable(),
+                ->searchable()->editOnClick(true),
 
             Column::action('Action')
         ];
@@ -79,23 +79,22 @@ final class UserTable extends PowerGridComponent
 
     public function filters(): array
     {
-        return [
-        ];
+        return ['name'];
     }
 
     #[\Livewire\Attributes\On('edit')]
     public function edit($rowId): void
     {
-        $this->js('alert('.$rowId.')');
+        $this->js('alert(' . $rowId . ')');
     }
 
     public function actions(User $row): array
     {
         return [
             Button::add('edit')
-                ->slot('Edit: '.$row->id)
+                ->slot('Edit: ' . $row->id)
                 ->id()
-                ->class('pg-btn-white dark:ring-pg-primary-600 dark:border-pg-primary-600 dark:hover:bg-pg-primary-700 dark:ring-offset-pg-primary-800 dark:text-pg-primary-300 dark:bg-pg-primary-700')
+                ->class('pg-btn-white dark:ring-pg-')
                 ->dispatch('edit', ['rowId' => $row->id])
         ];
     }
@@ -111,4 +110,16 @@ final class UserTable extends PowerGridComponent
         ];
     }
     */
+    public function update(array $data): bool
+    {
+        try {
+            $updated = User::query()->find($data['id']);
+            $updated->update([
+                $data['field'] => $data['value']
+            ]);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }
