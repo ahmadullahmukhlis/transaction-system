@@ -16,7 +16,7 @@
 </head>
 
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
-    <div class="wrapper">
+    <div id="app" class="wrapper p-2 m-1">
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
@@ -146,14 +146,14 @@
 
         <!--end::Page loading-->
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+        <div class="content-wrapper  ">
 
             <!-- /.content-header -->
             <div class="container">
                 {{ $header ?? '' }}
             </div>
             <!-- Main content -->
-            <section class="content" id="content">
+            <section class="content m-0 p-2" id="content">
                 {{ $slot }}
             </section>
             <!-- /.content -->
