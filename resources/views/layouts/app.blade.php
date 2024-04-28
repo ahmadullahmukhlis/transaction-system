@@ -99,11 +99,10 @@
 
 
                         <li class="nav-item">
-                            <a href="{{ route('dashboard') }}" class="nav-link">
+                            <a href="/dashboard" class="nav-link">
                                 <i class="nav-icon far fa-envelope"></i>
                                 <p>
                                     dashboard
-
                                 </p>
                             </a>
                         </li>
@@ -131,7 +130,12 @@
                                 </li>
                             </ul>
                         </li>
-
+                        <li class="nav-item">
+                            <a href="/setting" class="nav-link">
+                                <i class="fa-plus-square nav-icon"></i>
+                                <p>setting</p>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -139,10 +143,6 @@
             <!-- /.sidebar -->
         </aside>
         <!--begin::Page loading(append to body)-->
-        <div class="page-loader flex-column bg-dark bg-opacity-25">
-            <span class="spinner-border text-primary" role="status"></span>
-            <span class="text-gray-800 fs-6 fw-semibold mt-5">Loading...</span>
-        </div>
 
         <!--end::Page loading-->
         <!-- Content Wrapper. Contains page content -->
