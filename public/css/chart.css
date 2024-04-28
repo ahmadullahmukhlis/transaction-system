@@ -1,0 +1,28 @@
+
+
+#timeToRender {
+    position: absolute;
+    top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #d85757;
+    padding: 0px 4px;
+    color: #ffffff;
+}
+
+#backButton {
+    border-radius: 4px;
+    padding: 8px;
+    border: none;
+    font-size: 16px;
+    background-color: #2eacd1;
+    color: white;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.invisible {
+    display: none;
+}
