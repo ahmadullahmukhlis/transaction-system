@@ -20,6 +20,11 @@ final class UserTable extends PowerGridComponent
 {
     use WithExport;
 
+    public $showModal = false;
+    public $name;
+    public $email;
+    public $userId;
+
     public function setUp(): array
     {
         $this->showCheckBox();
@@ -79,13 +84,22 @@ final class UserTable extends PowerGridComponent
 
     public function filters(): array
     {
-        return ['name'];
+        return [];
     }
 
     #[\Livewire\Attributes\On('edit')]
     public function edit($rowId): void
     {
-        $this->js('alert(' . $rowId . ')');
+        // Find the user by ID
+        $user = User::findOrFail($rowId);
+
+        // Populate form fields with user data
+        $this->name = $user->name;
+        $this->email = $user->email;
+        $this->userId = $rowId;
+
+        // Show the modal for editing
+        $this->showModal = true;
     }
 
     public function actions(User $row): array
@@ -94,26 +108,15 @@ final class UserTable extends PowerGridComponent
             Button::add('edit')
                 ->slot('Edit: ' . $row->id)
                 ->id()
-                ->class('pg-btn-white dark:ring-pg-')
+                ->class('pg-btn-white dark:ring-p hover:bg-black hover:text-white')
                 ->dispatch('edit', ['rowId' => $row->id])
         ];
     }
 
-    /*
-    public function actionRules($row): array
-    {
-       return [
-            // Hide button edit for ID 1
-            Rule::button('edit')
-                ->when(fn($row) => $row->id === 1)
-                ->hide(),
-        ];
-    }
-    */
     public function update(array $data): bool
     {
         try {
-            $updated = User::query()->find($data['id']);
+            $updated = User::query()->find($this->userId);
             $updated->update([
                 $data['field'] => $data['value']
             ]);
