@@ -26,4 +26,14 @@
 
         <button type="submit">Update User</button>
     </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Listen for the 'edit-row' event from Livewire
+            window.addEventListener('edit-row', event => {
+                const rowId = event.detail.rowId;
+                // Perform your JavaScript action, e.g., alert the row ID
+                alert('Editing row: ' + rowId);
+            });
+        });
+    </script>
 </div>
