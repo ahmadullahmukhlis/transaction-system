@@ -19,6 +19,7 @@ use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 final class UserTable extends PowerGridComponent
 {
     use WithExport;
+    public string $loadingComponent = 'components.loading';
 
     public function setUp(): array
     {
@@ -60,20 +61,17 @@ final class UserTable extends PowerGridComponent
             Column::make('Id', 'id'),
             Column::make('Name', 'name')
                 ->sortable()
-                ->searchable(),
+                ->searchable()->editOnClick(),
 
             Column::make('Email', 'email')
                 ->sortable()
-                ->searchable(),
-
-            Column::make('Created at', 'created_at_formatted', 'created_at')
-                ->sortable(),
+                ->searchable()->editOnClick(),
 
             Column::make('Created at', 'created_at')
                 ->sortable()
-                ->searchable(),
+                ->searchable()->editOnClick(),
 
-            Column::action('Action')
+            Column::action('Action'),
         ];
     }
 
@@ -81,12 +79,24 @@ final class UserTable extends PowerGridComponent
     {
         return [];
     }
+    public function onUpdatedEditable(string|int $id, string $field, string $value): void
+    {
+        User::query()->find($id)->update([
+            $field => $value,
+        ]);
+    }
 
     #[\Livewire\Attributes\On('edit')]
     public function edit($rowId): void
     {
-        $this->js('alert(' . $rowId . ')');
+        $this->dispatch('user-edit', ['rowId' => $rowId]);
     }
+    #[\Livewire\Attributes\On('delete')]
+    public function delete($id)
+    {
+        $this->js('alert(' . $id . ')');
+    }
+
 
     public function actions(User $row): array
     {
@@ -94,8 +104,14 @@ final class UserTable extends PowerGridComponent
             Button::add('edit')
                 ->slot('Edit: ' . $row->id)
                 ->id()
-                ->class('pg-btn-white dark:ring-pg-')
-                ->dispatch('edit', ['rowId' => $row->id])
+                ->class('btn btn-warning')
+                ->dispatch('edit', ['rowId' => $row->id]),
+
+            Button::add('delete')->slot('Delete: ' . $row->id)
+                ->id()
+                ->class('btn btn-danger')
+                ->openModal('confirmation-modal', ['id' => 'id'])
+
         ];
     }
 
